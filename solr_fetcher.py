@@ -97,9 +97,14 @@ if __name__ == "__main__":
     # Configuration
     BASE_URL = "http://localhost:38983/solr"
     CORE_NAME = "omeka"
+    BATCH_SIZE = 9000
+    BATCH_DELAY = 0.2  # 200ms delay between requests
+    FIELDS = ['id', 'identifier', 'subject', 'collector', 'creator', 'language', 'subgenre', 'main_text', 'description',
+              'date', 'date_start', 'latitude', 'longitude'],  # Specify fields to return
+    SORT_KEYS = "id asc"  # Sort by id ascending
 
     # Create fetcher instance
-    fetcher = SolrBatchFetcher(BASE_URL, CORE_NAME, batch_size=9000)
+    fetcher = SolrBatchFetcher(BASE_URL, CORE_NAME, batch_size=BATCH_SIZE)
 
     # Get total record count
     stats = fetcher.get_stats()
@@ -110,9 +115,9 @@ if __name__ == "__main__":
         # Fetch all records
         print("\nFetching all records...")
         all_records = fetcher.fetch_all(
-            fields=['id', 'identifier', 'subject', 'collector', 'creator', 'language', 'subgenre', 'main_text', 'description', 'date_start', 'latitude', 'longitude'],  # Specify fields to return
-            sort='id asc',  # Sort by id
-            delay=0.2  # 200ms delay between requests
+            fields=FIELDS,  # Specify fields to return
+            sort=SORT_KEYS,  # Sort by id
+            delay=BATCH_DELAY  # 200ms delay between requests
         )
 
         # Save to file
