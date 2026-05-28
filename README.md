@@ -27,6 +27,13 @@ uv run elastic_fetch.py <TODO: parameters>
 ### File: `elasticsearch_manager.py`
 ### Usage:
 #### Create index, user and assign role to the user
+Check the version of elasticsearch you are using and use the corresponding version of the package `elasticsearch`. 
+Command to check server ES version:
+```bash
+# Server version
+curl -sk -u elastic:'<ELASTIC_PASSWORD>' https://195.169.89.231:9200 | jq '.version.number'
+```
+
 ```shell
 uv run elasticsearch_manager.py create-index-user \
   --host "localhost" \
